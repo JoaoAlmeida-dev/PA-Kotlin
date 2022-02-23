@@ -1,5 +1,5 @@
-import Exercise1.Exercise1Demo
+import exercise1.Exercise1Demo
 
-fun main(args: Array<String>) {
+fun main() {
     Exercise1Demo()
 }
