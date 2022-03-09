@@ -11,7 +11,8 @@ fun Exercise1Demo() {
     higherOrder()
     functionalComposition()
 }
-val name:String = "Exercise1"
+
+val name: String = "Exercise1"
 
 private fun recursion() {
     println("----------$name.Recursion----------")
@@ -43,7 +44,7 @@ fun higherOrder() {
     println(HigherOrder.sumRangeRecHigher(1, 20, Lambda.Companion::isEven))
 }
 
-fun functionalComposition(){
+fun functionalComposition() {
     println("----------$name.FunctionalComposition----------")
     (1..10000)
         .filter { n -> FunctionalComposition.isPerfectNumber(n) }
