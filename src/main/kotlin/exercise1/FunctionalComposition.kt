@@ -1,4 +1,4 @@
-package Exercise1
+package exercise1
 
 class FunctionalComposition {
     companion object {

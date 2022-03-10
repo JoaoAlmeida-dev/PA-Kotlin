@@ -1,4 +1,4 @@
-package Exercise1
+package exercise1
 class Lambda {
     companion object{
         val isEven : (Int)-> Boolean = { n:Int ->n%2==0}
