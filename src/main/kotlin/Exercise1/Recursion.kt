@@ -1,4 +1,4 @@
-package exercise1
+package Exercise1
 
 class Recursion {
     companion object {
@@ -22,7 +22,6 @@ class Recursion {
         }
 
 
-
         tailrec fun firstDigit(n: Int): Int = if (n < 10) {
             n
         } else {
@@ -30,5 +29,5 @@ class Recursion {
         }
 
 
-        }
     }
+}

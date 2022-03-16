@@ -8,7 +8,7 @@ abstract class Element(val name: String, val parent: DirectoryElement?, val file
     }
 
     companion object {
-        val tab: String = "\t"
+        val tab: String = ".\t"
     }
 
     open fun prettyPrint() {

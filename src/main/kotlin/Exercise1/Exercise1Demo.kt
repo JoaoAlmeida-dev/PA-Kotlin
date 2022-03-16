@@ -1,4 +1,4 @@
-package exercise1
+package Exercise1
 
 
 fun main() {
@@ -11,6 +11,7 @@ fun Exercise1Demo() {
     higherOrder()
     functionalComposition()
 }
+
 val name: String = "Exercise1"
 
 private fun recursion() {

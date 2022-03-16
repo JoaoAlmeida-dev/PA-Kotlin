@@ -5,7 +5,7 @@ import java.io.File
 class DirectoryElement(
     val children: MutableList<Element> = mutableListOf<Element>(),
     name: String,
-    parent: DirectoryElement?,
+    parent: DirectoryElement? = null,
     file: File,
 ) : Element(name, parent, file) {
     init {
@@ -25,4 +25,6 @@ class DirectoryElement(
         println(tab.repeat(depth) + name)
         children.forEach(action = { element -> element.prettyPrint() })
     }
+
+
 }
