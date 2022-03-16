@@ -16,11 +16,3 @@ class Point(val x: Int, val y: Int) {
 
     fun sum(x: Int, y: Int) = Point(this.x + x, this.y + y)
 }
-
-fun main() {
-    val clazz: KClass<*> = Point()::class
-    println(clazz.qualifiedName)
-    clazz.declaredMemberProperties.forEach {
-        println(it)
-    }
-}
