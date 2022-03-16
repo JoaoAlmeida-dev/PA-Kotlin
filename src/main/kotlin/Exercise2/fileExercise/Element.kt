@@ -17,5 +17,5 @@ abstract class Element(val name: String, val parent: DirectoryElement?, val file
 
     val depth: Int
         get() = (parent?.depth?.plus(1) ?: 0)
-    val path: String get() = ((parent?.path + "/" + this.name) ?: this.name)
+    val path: String get() = (parent?.path + "/" + this.name)
 }

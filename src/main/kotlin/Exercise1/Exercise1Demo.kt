@@ -6,6 +6,7 @@ fun main() {
 }
 
 fun Exercise1Demo() {
+    println("_\t_Exercise3_\t_")
     recursion()
     lambda()
     higherOrder()
