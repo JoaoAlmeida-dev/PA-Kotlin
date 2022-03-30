@@ -1,9 +1,8 @@
-import Exercise1.Exercise1Demo
-import Exercise2.Exercise2Demo
-import Exercise3.Exercise3Demo
+import Exercise4.Exercise4Demo
 
-fun main(args: Array<String>) {
+fun main() {
     //Exercise1Demo()
     //Exercise2Demo()
-    Exercise3Demo()
+    //Exercise3Demo()
+    Exercise4Demo()
 }
