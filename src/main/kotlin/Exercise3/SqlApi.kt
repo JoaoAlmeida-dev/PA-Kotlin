@@ -4,21 +4,25 @@ import Exercise3.SQLMapTypes.MapType
 import Exercise3.SQLMapTypes.MysqlMapping
 import Exercise3.SQLMapTypes.SqliteMapping
 import kotlin.reflect.KClass
+import kotlin.reflect.KClassifier
+import kotlin.reflect.KProperty1
 import kotlin.reflect.full.declaredMemberProperties
+import kotlin.reflect.full.findAnnotation
+import kotlin.reflect.full.hasAnnotation
 import kotlin.reflect.full.isSubclassOf
 
-class SqlApi(val mapping: MapType ) {
+class SqlApi(val mapping: MapType) {
     companion object {
         fun SqlTest() {
-            val sqliteApi : SqlApi = SqlApi(SqliteMapping())
-            val mysqlApi : SqlApi = SqlApi(MysqlMapping())
+            val sqliteApi: SqlApi = SqlApi(SqliteMapping())
+            val mysqlApi: SqlApi = SqlApi(MysqlMapping())
 
             val clazzPoint: KClass<*> = Point::class
             println("sqlite: ${sqliteApi.createTable(clazzPoint)}")
             println("mysql: ${mysqlApi.createTable(clazzPoint)}")
 
             val clazzStudent: KClass<*> = Student::class
-            println("sqlite: ${ sqliteApi.createTable(clazzStudent) }")
+            println("sqlite: ${sqliteApi.createTable(clazzStudent)}")
             println("mysql: ${mysqlApi.createTable(clazzStudent)}")
 
             println(sqliteApi.insert(Student(69, "Ronaldo", StudentType.Doctoral)))
@@ -29,32 +33,38 @@ class SqlApi(val mapping: MapType ) {
         val membersStringList: MutableList<String> = mutableListOf()
         clazz.declaredMemberProperties.forEach { it ->
             //println("${it.name} ${it.returnType} ${it.typeParameters} ")
-            val nullable: String = if (!it.returnType.isMarkedNullable) {
-                "NOT NULL"
-            } else {
-                "NULL"
-            }
-            val atributeClassifier = it.returnType.classifier
-            val type: String = when (atributeClassifier) {
-                Int::class -> mapping.Int
-                Double::class -> mapping.Double
-                String::class -> mapping.String
-                Boolean::class -> mapping.Boolean
-                else -> {
-                    val classOfAtribute = atributeClassifier as KClass<*>
-                    if (classOfAtribute.isSubclassOf(Enum::class)) {
-                        "ENUM( ${classOfAtribute.java.enumConstants.joinToString(separator = ", ")} )"
-                    } else {
-                        mapping.String
-                    }
-                }
-            }
-            val memberString: kotlin.String = "${it.name} $type $nullable"
+            val parameterName: String = it.getPropertyName()
+
+            val type: String = mapping.mapType(it.returnType)
+            val memberString: String = "$parameterName $type"
             membersStringList.add(memberString)
         }
 
-        return "CREATE TABLE ${clazz.simpleName} ( ${membersStringList.joinToString(separator = ", ") { it }} );"
+        val clazzName: String? = clazz.getClassName()
+        return "CREATE TABLE $clazzName ( ${membersStringList.joinToString(separator = ", ") { it }} );"
     }
+
+
+    private fun KClass<*>.getClassName() = if (this.hasAnnotation<DbName>()) {
+        this.findAnnotation<DbName>()?.name
+    } else {
+        this.simpleName
+    }
+
+    private fun KProperty1<out Any, *>.getPropertyNullable() =
+        if (!this.returnType.isMarkedNullable) {
+            "NOT NULL"
+        } else {
+            "NULL"
+        }
+
+    private fun KProperty1<out Any, *>.getPropertyName() =
+        if (this.hasAnnotation<DbName>()) {
+            this.findAnnotation<DbName>()!!.name
+        } else {
+            this.name
+        }
+
 
     fun insert(obj: Any): String {
         val membersStringList: MutableList<String> = mutableListOf()
