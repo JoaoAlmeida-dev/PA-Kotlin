@@ -1,5 +1,6 @@
 package Exercise2.fileExercise
 
+import Exercise5.Visitors.Visitor
 import java.io.File
 
 class DirectoryElement(
@@ -12,9 +13,9 @@ class DirectoryElement(
         check(file.isDirectory)
         file.listFiles().forEach {
             if (it.isDirectory) {
-                children.add(DirectoryElement(name = it.name, parent = this, file = it))
+                DirectoryElement(name = it.name, parent = this, file = it)
             } else {
-                children.add(FileElement(name = it.name, parent = this, file = it))
+                FileElement(name = it.name, parent = this, file = it)
             }
         }
     }
@@ -24,6 +25,15 @@ class DirectoryElement(
     override fun prettyPrint() {
         println(tab.repeat(depth) + name)
         children.forEach(action = { element -> element.prettyPrint() })
+    }
+
+    override fun accept(v: Visitor) {
+        if (v.visit(this)) {
+            children.forEach {
+                it.accept(v)
+            }
+        }
+        v.endvisit(this)
     }
 
 
