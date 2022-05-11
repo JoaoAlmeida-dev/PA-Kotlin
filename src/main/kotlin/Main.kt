@@ -4,5 +4,6 @@ fun main() {
     //Exercise3Demo()
     //Exercise4Demo()
     //Exercise5Demo()
-    Exercise6.main()
+    //Exercise6.main()
+    //Exercise7.main()
 }
